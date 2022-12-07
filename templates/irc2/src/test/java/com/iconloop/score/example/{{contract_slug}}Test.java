@@ -41,7 +41,7 @@ class {{contract_slug}}Test extends TestBase {
 
     @BeforeAll
     public static void setup() throws Exception {
-        tokenScore = sm.deploy(owner, {{contract_slug}}Token.class,
+        tokenScore = sm.deploy(owner, {{contract_slug}}.class,
                 name, symbol, decimals, initialSupply);
         owner.addBalance(symbol, totalSupply);
     }
