@@ -1,0 +1,28 @@
+<-:
+  help: Generate scaffolding for an ICON smart contract
+
+  exec:
+    is_token->: confirm Is this a token / NFT?
+    token_standard->: select --choices ['irc2','irc3','irc31'] --if is_token --else contract
+    contract_class->: literal token --if is_token --else contract # For differentiating between tokens and contracts
+    contract_type->: var token_standard --if is_token --else contract
+
+    contract_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
+    project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
+    contract_slug->: var contract_name|replace(' ','')|replace('-','')|replace('.','')|trim()
+
+#    d->: debug
+
+    # Generate the code
+    gen ci_>: generate templates/.github {{project_slug}}/.github --if "confirm('Do you want to generate CI')"
+    gen boilerplate_>: generate templates/boilerplate {{project_slug}}
+    gen token:
+      _>: match contract_type
+      case:
+        contract->: generate templates/contract {{project_slug}}
+        irc2->: generate templates/irc2 {{project_slug}}
+        irc3->: generate templates/irc3 {{project_slug}}
+        irc31->: generate templates/irc31 {{project_slug}}
+
+test<-:
+  help: Run the tests
