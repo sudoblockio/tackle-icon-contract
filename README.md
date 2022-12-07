@@ -9,6 +9,42 @@ pip install tackle
 tackle sudoblockio/tackle-icon-sc-poc
 ```
 
+```text
+? Is this a token / NFT? Yes
+? token_standard >>> irc2
+? What is the token name? Big Deal Token
+? Do you want to generate CI Yes
+```
+
+```text
+.
+├── build.gradle
+├── gradlew
+├── gradlew.bat
+├── LICENSE
+├── README.md
+├── requirements-dev.txt
+├── settings.gradle
+└── src
+    ├── main
+    │ └── java
+    │     └── com
+    │         └── iconloop
+    │             └── score
+    │                 └── example
+    │                     └── BigDealTokenToken.java
+    └── test
+        └── java
+            └── com
+                └── iconloop
+                    └── score
+                        └── example
+                            └── BigDealTokenTest.java
+
+13 directories, 9 files
+```
+
+
 ### TTD 
 
 Very early projection of what to do 
