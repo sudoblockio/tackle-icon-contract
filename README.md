@@ -14,8 +14,19 @@ tackle sudoblockio/tackle-icon-sc-poc
 
 ```text
 ? Is this a token / NFT? Yes
-? token_standard >>> irc2
+? token_standard >>> 
+❯ irc2
+  irc3
+  irc31
 ? What is the token name? Big Deal Token
+? license_type >>> 
+❯ Apache 2.0
+  MIT
+  GPL Version 3
+  BSD Version 3
+  Closed source
+? Who are the license holders? Me, myself, and Irene
+? What year to end the license? (current year is fine) 2022
 ? Do you want to generate CI Yes
 ```
 
