@@ -3,7 +3,7 @@
 [![loopchain](https://img.shields.io/badge/ICON-API-blue?logoColor=white&logo=icon&labelColor=31B8BB)](https://shields.io) 
 ![](https://github.com/sudoblockio/tackle-icon-sc-poc/workflows/push-main/badge.svg?branch=main) 
 
-A POC around how to generate smart contract code scaffolding using tackle. 
+A POC around how to generate smart contract code scaffolding using [tackle](https://github.com/sudoblockio/tackle). 
 
 ```shell
 python -m venv env 
@@ -35,7 +35,7 @@ tackle sudoblockio/tackle-icon-sc-poc
     │         └── iconloop
     │             └── score
     │                 └── example
-    │                     └── BigDealTokenToken.java
+    │                     └── BigDealToken.java
     └── test
         └── java
             └── com
@@ -50,7 +50,7 @@ tackle sudoblockio/tackle-icon-sc-poc
 
 ### TTD 
 
-Very early projection of what to do 
+Very early projection of what would need to be done to make this project usable. 
 
 - [ ] Make it so the contracts can run tests + be deployed once they are generated 
   - [ ] CI run generator with inputs and then run tests  

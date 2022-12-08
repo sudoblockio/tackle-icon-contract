@@ -9,9 +9,10 @@
 
     contract_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
     project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
-    contract_slug->: var contract_name|replace(' ','')|replace('-','')|replace('.','')|trim()
+    contract_slug->: var project_slug|replace('_','')
 
 #    d->: debug
+    license->: tackle robcxyz/tackle-license --output {{project_slug}}
 
     # Generate the code
     gen ci_>: generate templates/.github {{project_slug}}/.github --if "confirm('Do you want to generate CI')"
@@ -26,3 +27,5 @@
 
 test<-:
   help: Run the tests
+  exec:
+    info->: print Running tests
