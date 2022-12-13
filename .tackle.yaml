@@ -15,7 +15,8 @@
     license->: tackle robcxyz/tackle-license --output {{project_slug}}
 
     # Generate the code
-    gen ci_>: generate templates/.github {{project_slug}}/.github --if "confirm('Do you want to generate CI')"
+    ci_enable->: confirm Do you want to generate CI
+    gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
     gen token:
       _>: match contract_type
