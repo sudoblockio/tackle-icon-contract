@@ -11,7 +11,35 @@
     project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
     contract_slug->: var project_slug|replace('_','')
 
-#    d->: debug
+    features:
+      ->: match token_standard --merge
+      case:
+        irc2:
+          mintable->: confirm
+          burnable->: confirm
+          pausable->: confirm
+          permit->: confirm
+          votes->: confirm
+          flash_minting->: confirm
+          snapshots->: confirm
+        irc3:
+          mintable->: confirm
+          auto_increment_ids->: confirm --if mintable --else false
+          burnable->: confirm
+          pausable->: confirm
+          votes->: confirm
+          enumerable->: confirm
+          uri_storage->: confirm
+        irc31:
+          mintable->: confirm
+          auto_increment_ids->: confirm --if mintable --else false
+          burnable->: confirm
+          pausable->: confirm
+          votes->: confirm
+          enumerable->: confirm
+          uri_storage->: confirm
+
+    d->: debug
     license->: tackle robcxyz/tackle-license --output {{project_slug}}
 
     # Generate the code
