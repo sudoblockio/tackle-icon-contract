@@ -19,6 +19,13 @@ tackle sudoblockio/tackle-icon-sc-poc
   irc3
   irc31
 ? What is the token name? Big Deal Token
+? features.mintable >>> Yes
+? features.burnable >>> Yes
+? features.pausable >>> Yes
+? features.permit >>> Yes
+? features.votes >>> Yes
+? features.flash_minting >>> Yes
+? features.snapshots >>> Yes
 ? license_type >>> 
 ❯ Apache 2.0
   MIT
