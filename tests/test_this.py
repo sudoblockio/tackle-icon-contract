@@ -8,10 +8,24 @@ BASE_OVERRIDES = {
     "ci_enable": True,
 }
 
+# TOKEN_STANDARDS = [
+#     ("irc2", {
+#         # "mintable": True,
+#         # "burnable": True,
+#         # "pausable": True,
+#         # "permit": True,
+#         # "votes": True,
+#         # "flash_minting": True,
+#         # "snapshots": True,
+#     }),
+#     ("irc3",),
+#     ("irc31",),
+# ]
+
 TOKEN_STANDARDS = [
-    "irc2",
-    "irc3",
-    "irc31",
+    ("irc2"),
+    ("irc3"),
+    ("irc31"),
 ]
 
 

@@ -31,20 +31,32 @@ public class IRC2BasicToken extends IRC2Basic {
     }
 
     {% if mintable %}
-    public Mint(String _name, String _symbol, int _decimals, BigInteger _initialSupply) {
-        super(_name, _symbol, _decimals);
+    public Mint() {
+        // Mint logic
+    }{% endif %}
+    {% if burnable %}
+    public Burn() {
+        // Burn logic
+    }{% endif %}
+    {% if pausable %}
+    public Pause() {
+        // Pause logic
+    }{% endif %}
+    {% if permit %}
+    public Permit() {
+        // Permit logic
+    }{% endif %}
+    {% if votes %}
+    public Vote() {
+        // Vote logic
+    }{% endif %}
+    {% if flash_minting %}
+    public FlashMint() {
+        // FlashMint logic
+    }{% endif %}
+    {% if snapshots %}
+    public Snapshot() {
+        // Snapshot logic
+    }{% endif %}
 
-        // mint the initial token supply here
-        Context.require(_initialSupply.compareTo(BigInteger.ZERO) >= 0);
-        _mint(Context.getCaller(), _initialSupply.multiply(pow10(_decimals)));
-    }
-    {% endif %}
-
-    private static BigInteger pow10(int exponent) {
-        BigInteger result = BigInteger.ONE;
-        for (int i = 0; i < exponent; i++) {
-            result = result.multiply(BigInteger.TEN);
-        }
-        return result;
-    }
 }
