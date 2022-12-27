@@ -7,7 +7,7 @@ A POC around how to generate smart contract code scaffolding using [tackle](http
 
 ```shell
 python -m venv env 
-source env 
+source env/bin/activate
 pip install tackle 
 tackle sudoblockio/tackle-icon-sc-poc
 ```
