@@ -1,16 +1,22 @@
-# tackle-icon-sc-poc
+# tackle-icon-contract
 
 [![loopchain](https://img.shields.io/badge/ICON-API-blue?logoColor=white&logo=icon&labelColor=31B8BB)](https://shields.io) 
 ![](https://github.com/sudoblockio/tackle-icon-sc-poc/workflows/push-main/badge.svg?branch=main) 
 
-A POC around how to generate smart contract code scaffolding using [tackle](https://github.com/sudoblockio/tackle). 
+Create a contract on the ICON  generate smart contract code scaffolding using [tackle](https://github.com/sudoblockio/tackle). 
+
+> WARNING -> Still a WIP and basically a POC. Work will be ongoing to create good templates.
+
+### Usage 
 
 ```shell
 python -m venv env 
 source env/bin/activate
 pip install tackle 
-tackle sudoblockio/tackle-icon-sc-poc
+tackle sudoblockio/tackle-icon-contract
 ```
+
+**Dialogue**
 
 ```text
 ? Is this a token / NFT? Yes
@@ -36,6 +42,8 @@ tackle sudoblockio/tackle-icon-sc-poc
 ? What year to end the license? (current year is fine) 2022
 ? Do you want to generate CI Yes
 ```
+
+**Resulting File Structure**
 
 ```text
 .
@@ -65,6 +73,12 @@ tackle sudoblockio/tackle-icon-sc-poc
 13 directories, 9 files
 ```
 
+### Running Tests 
+
+```shell
+pip install -r requirements-dev.txt
+make test 
+```
 
 ### TTD 
 
@@ -81,3 +95,8 @@ Very early projection of what would need to be done to make this project usable.
     - Could add a lot of work -> pick one or the other 
   - [ ] Create new wallet, automatically hit faucet, deploy to selectable network 
 - [ ] Add drogon test suite 
+
+
+### License 
+
+Apache 2.0
