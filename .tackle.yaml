@@ -1,3 +1,4 @@
+
 <-:
   help: Generate scaffolding for an ICON smart contract
 
@@ -38,8 +39,10 @@
           votes->: confirm
           enumerable->: confirm
           uri_storage->: confirm
+        contract:
+          pausable->: confirm
 
-    d->: debug
+    # Create a license file
     license->: tackle robcxyz/tackle-license --output {{project_slug}}
 
     # Generate the code
