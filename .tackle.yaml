@@ -3,6 +3,16 @@
   help: Generate scaffolding for an ICON smart contract
 
   exec:
+    warning:
+      ->: confirm
+      message: |
+        WARNING: This is very much a WIP project. Features such as "burnable", 
+        "mintable", etc have not been implemented yet. It simply uses the contracts 
+        from the sample contracts repo. Later version will use contracts from 
+        https://github.com/TechFlow-Space/icon-smart-contract-deployer but these still 
+        need to be templated and have the actual features implemented. It is advised 
+        to wait till then before really using this tool. 
+
     is_token->: confirm Is this a token / NFT?
     token_standard->: select --choices ['irc2','irc3','irc31'] --if is_token --else contract
     contract_class->: literal token --if is_token --else contract # For differentiating between tokens and contracts
