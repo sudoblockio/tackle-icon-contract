@@ -1,4 +1,3 @@
-
 <-:
   help: Generate scaffolding for an ICON smart contract
 
@@ -14,43 +13,69 @@
         to wait till then before really using this tool. 
 
     is_token->: confirm Is this a token / NFT?
-    token_standard->: select --choices ['irc2','irc3','irc31'] --if is_token --else contract
-    contract_class->: literal token --if is_token --else contract # For differentiating between tokens and contracts
-    contract_type->: var token_standard --if is_token --else contract
-
+    contract_standard->: select --choices ['irc2','irc3','irc31'] --if is_token --else contract
+    # For differentiating between tokens and contracts
+    contract_class->: literal token --if is_token --else contract
     contract_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
     project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
     contract_slug->: var project_slug|replace('_','')
 
+    prompts:
+      # Follow up with permissions - ie multi-sig for minting or some contract functionality.
+      mintable: Is this token mintable?
+      auto_increment_ids: Do you want the token IDs to auto-increment?
+      # Followup?
+      burnable: Is this token burnable?
+      # Should pausable have additional prompts such as who is able to pause it or just assume owner?
+      # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
+      pausable: Is this {{contract_class}} mintable?
+      # ?
+      permit: Is this token permissioned?
+      # Can contracts have voting?
+      votes: Will there be voting enabled for this token?
+      flash_minting: Will there be flash minting enabled for this token?
+      # Can contracts be snapshotted -> perhaps some state that is specified?
+      snapshots: Will there be snapshotting of this token?
+      # ?
+      enumerable: Is this token enumerable?
+      # ?
+      uri_storage: |
+        Will the storage be based on some kind URI? eg ?
+
     features:
-      ->: match token_standard --merge
+      ->: match contract_standard
       case:
         irc2:
-          mintable->: confirm
-          burnable->: confirm
-          pausable->: confirm
-          permit->: confirm
-          votes->: confirm
-          flash_minting->: confirm
-          snapshots->: confirm
+          mintable->: confirm {{prompts.mintable}}
+          burnable->: confirm {{prompts.burnable}}
+          pausable->: confirm {{prompts.pausable}}
+          permit->: confirm {{prompts.permit}}
+          votes->: confirm {{prompts.votes}}
+          flash_minting->: confirm {{prompts.flash_minting}}
+          snapshots->: confirm {{prompts.snapshots}}
         irc3:
-          mintable->: confirm
-          auto_increment_ids->: confirm --if mintable --else false
-          burnable->: confirm
-          pausable->: confirm
-          votes->: confirm
-          enumerable->: confirm
-          uri_storage->: confirm
+          mintable->: confirm {{prompts.mintable}}
+          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
+          burnable->: confirm {{prompts.burnable}}
+          pausable->: confirm {{prompts.pausable}}
+          votes->: confirm {{prompts.votes}}
+          enumerable->: confirm {{prompts.enumerable}}
+          uri_storage->: confirm {{prompts.uri_storage}}
         irc31:
-          mintable->: confirm
-          auto_increment_ids->: confirm --if mintable --else false
-          burnable->: confirm
-          pausable->: confirm
-          votes->: confirm
-          enumerable->: confirm
-          uri_storage->: confirm
+          mintable->: confirm {{prompts.mintable}}
+          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
+          burnable->: confirm {{prompts.burnable}}
+          pausable->: confirm {{prompts.pausable}}
+          votes->: confirm {{prompts.votes}}
+          enumerable->: confirm {{prompts.enumerable}}
+          uri_storage->: confirm {{prompts.uri_storage}}
         contract:
-          pausable->: confirm
+          pausable->: confirm {{prompts.pausable}}
+
+    # In order to properly test the file, we need to merge these values separately. This
+    # is because the whole `features` key is overriden. Current tackle does not support
+    # overriding keys within
+    merge features->: var {{features}} --merge
 
     # Create a license file
     license->: tackle robcxyz/tackle-license --output {{project_slug}}
@@ -59,13 +84,8 @@
     ci_enable->: confirm Do you want to generate CI
     gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
-    gen token:
-      _>: match contract_type
-      case:
-        contract->: generate templates/contract {{project_slug}}
-        irc2->: generate templates/irc2 {{project_slug}}
-        irc3->: generate templates/irc3 {{project_slug}}
-        irc31->: generate templates/irc31 {{project_slug}}
+    # d->: debug
+    gen contract->: generate templates/{{contract_standard}} {{project_slug}}
 
 test<-:
   help: Run the tests
