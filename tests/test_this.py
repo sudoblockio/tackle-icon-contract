@@ -25,6 +25,7 @@ def test_defaults(
         test_pytest_output,
         cleanup_output,
         contract_standard,
+        # compile_contract,
 ):
     """
     Setting no_input (ie choose the default value, true for the `confirm` hook), this
@@ -104,6 +105,7 @@ def test_features(
         cleanup_output,
         token_standard,
         options,
+        # compile_contract,
 ):
     overrides = {
         "contract_standard": token_standard,

@@ -3,6 +3,7 @@ import shutil
 import sys
 import pytest
 from pytest import ExitCode
+import subprocess
 
 
 @pytest.fixture()
@@ -89,3 +90,17 @@ def cleanup_output(cleanup_path):
     cleanup_path("output")
     yield
     cleanup_path("output")
+
+
+@pytest.fixture()
+def compile_contract():
+    yield
+    # TODO: Turn this into a function?
+    os.chdir('output')
+    command = ["./gradlew", "build"]
+    p = subprocess.Popen(
+        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
+    output, err = p.communicate()
+    # TODO: This might not actually be None
+    assert err is None
