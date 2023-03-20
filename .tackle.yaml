@@ -86,13 +86,13 @@
     merge features->: var {{features}} --merge
 
     # Create a license file
-#    license->: tackle robcxyz/tackle-license --output {{project_slug}}
+    license->: tackle robcxyz/tackle-license --output {{project_slug}}
 
     # Generate the code
     ci_enable->: confirm Do you want to generate CI
     gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
-#    d->: debug
+    #d->: debug
     gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
 
     make gradlew executable_>: chmod {{path_join([project_slug,'gradlew'])}} "0o775"
