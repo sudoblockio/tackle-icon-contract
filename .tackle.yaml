@@ -1,7 +1,7 @@
 <-:
   help: Generate scaffolding for an ICON smart contract
-
   exec:
+    # A warning -> to be removed
     warning:
       ->: confirm
       message: |
@@ -21,26 +21,28 @@
     contract_slug->: var project_slug|replace('_','')
 
     prompts:
-      # Follow up with permissions - ie multi-sig for minting or some contract functionality.
-      mintable: Is this token mintable?
-      auto_increment_ids: Do you want the token IDs to auto-increment?
-      # Followup?
-      burnable: Is this token burnable?
-      # Should pausable have additional prompts such as who is able to pause it or just assume owner?
-      # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
-      pausable: Is this {{contract_class}} mintable?
-      # ?
-      permit: Is this token permissioned?
-      # Can contracts have voting?
-      votes: Will there be voting enabled for this token?
-      flash_minting: Will there be flash minting enabled for this token?
-      # Can contracts be snapshotted -> perhaps some state that is specified?
-      snapshots: Will there be snapshotting of this token?
-      # ?
-      enumerable: Is this token enumerable?
-      # ?
-      uri_storage: |
-        Will the storage be based on some kind URI? eg ?
+      _>: var
+      input:
+        # Follow up with permissions - ie multi-sig for minting or some contract functionality.
+        mintable: Is this token mintable?
+        auto_increment_ids: Do you want the token IDs to auto-increment?
+        # Followup?
+        burnable: Is this token burnable?
+        # Should pausable have additional prompts such as who is able to pause it or just assume owner?
+        # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
+        pausable: Is this {{contract_class}} mintable?
+        # ?
+        permit: Is this token permissioned?
+        # Can contracts have voting?
+        votes: Will there be voting enabled for this token?
+        flash_minting: Will there be flash minting enabled for this token?
+        # Can contracts be snapshotted -> perhaps some state that is specified?
+        snapshots: Will there be snapshotting of this token?
+        # ?
+        enumerable: Is this token enumerable?
+        # ?
+        uri_storage: |
+          Will the storage be based on some kind URI? eg ?
 
     features:
       ->: match contract_standard
@@ -84,7 +86,7 @@
     ci_enable->: confirm Do you want to generate CI
     gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
-    # d->: debug
+#    d->: debug
     gen contract->: generate templates/{{contract_standard}} {{project_slug}}
 
 test<-:
