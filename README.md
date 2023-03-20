@@ -20,18 +20,18 @@ tackle sudoblockio/tackle-icon-contract
 
 ```text
 ? Is this a token / NFT? Yes
-? token_standard >>> 
-❯ irc2
-  irc3
-  irc31
+? What standard do you want to build on? 
+❯ IRC2 Fungible Token
+  IRC3 Non-Fungible Token
+  IRC31 Non-Fungible Token
 ? What is the token name? Big Deal Token
-? features.mintable >>> Yes
-? features.burnable >>> Yes
-? features.pausable >>> Yes
-? features.permit >>> Yes
-? features.votes >>> Yes
-? features.flash_minting >>> Yes
-? features.snapshots >>> Yes
+? Is this token mintable? Yes
+? Is this token burnable? Yes
+? Is this token pausable? Yes
+? Is this token permissioned? Yes
+? Will there be voting enabled for this token? Yes
+? Will there be flash minting enabled for this token? Yes
+? Will there be snapshotting of this token? Yes
 ? license_type >>> 
 ❯ Apache 2.0
   MIT

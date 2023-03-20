@@ -13,7 +13,13 @@
         to wait till then before really using this tool. 
 
     is_token->: confirm Is this a token / NFT?
-    contract_standard->: select --choices ['irc2','irc3','irc31'] --if is_token --else contract
+    contract_standard:
+      ->: select What standard do you want to build on? --if is_token --else contract
+      choices:
+        - IRC2 Fungible Token: irc2
+        - IRC3 Non-Fungible Token: irc3
+        - IRC31 Non-Fungible Token: irc31
+
     # For differentiating between tokens and contracts
     contract_class->: literal token --if is_token --else contract
     contract_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
@@ -30,7 +36,7 @@
         burnable: Is this token burnable?
         # Should pausable have additional prompts such as who is able to pause it or just assume owner?
         # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
-        pausable: Is this {{contract_class}} mintable?
+        pausable: Is this {{contract_class}} pausable?
         # ?
         permit: Is this token permissioned?
         # Can contracts have voting?
