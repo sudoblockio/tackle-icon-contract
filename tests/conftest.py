@@ -104,3 +104,23 @@ def compile_contract():
     output, err = p.communicate()
     # TODO: This might not actually be None
     assert err is None
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--manual", action="store_true", default=False, help="run manual tests"
+    )
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "manual: mark test as run manual")
+
+
+def pytest_collection_modifyitems(config, items):
+    if config.getoption("--manual"):
+        # --runslow given in cli: do not skip slow tests
+        return
+    skip_manual = pytest.mark.skip(reason="need --manual option to run")
+    for item in items:
+        if "manual" in item.keywords:
+            item.add_marker(skip_manual)
