@@ -1,17 +1,17 @@
 .DEFAULT_GOAL := help
 
-.PHONY: clean-tox
 clean-tox: ## Remove tox testing artifacts
 	@echo "+ $@"
 	@rm -rf .tox/
 
-.PHONY: clean
 clean: clean-tox ## Remove all file artifacts
 
-.PHONY: test
 test:  ## Run tests quickly with the default Python
 	@echo "+ $@"
 	@tox -e py
+
+quick-gen:  ## Quickly generate all the contracts to `outputs-all` directory
+	@pytest . -k test_manual --manual
 
 .PHONY: help
 help:
