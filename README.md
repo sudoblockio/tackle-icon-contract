@@ -100,6 +100,7 @@ make test
 Running the above tests will generate the code to an `output` directory and then delete that directory after the tests. This is helpful for automation but makes it difficult to iterate on the templates as the generated code is temporary. To generate the code to a directory that is not deleted, run: 
 
 ```shell
+pip install -r requirements-dev.txt
 make quick-gen
 cd outputs-all
 ```
