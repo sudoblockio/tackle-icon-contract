@@ -9,15 +9,26 @@ Create a contract on the ICON  generate smart contract code scaffolding using [t
 
 ### Usage 
 
+**Install tackle**
 ```shell
 python -m venv env 
 source env/bin/activate
 pip install tackle 
+```
+
+**Remote**
+```shell
 tackle sudoblockio/tackle-icon-contract
 ```
 
-**Dialogue**
+**Local**
+```shell
+git clone https://github.com/sudoblockio/tackle-icon-contract
+cd tackle-icon-contract
+tackle 
+```
 
+**Dialogue**
 ```text
 ? Is this a token / NFT? Yes
 ? What standard do you want to build on? 
@@ -75,10 +86,31 @@ tackle sudoblockio/tackle-icon-contract
 
 ### Running Tests 
 
+- Generates each token standard
+- Compiles the contract 
+- TODO: Runs [drogon](https://github.com/icon-community/drogon) on each generated contract 
+
 ```shell
 pip install -r requirements-dev.txt
 make test 
 ```
+
+### Local Development 
+
+Running the above tests will generate the code to an `output` directory and then delete that directory after the tests. This is helpful for automation but makes it difficult to iterate on the templates as the generated code is temporary. To generate the code to a directory that is not deleted, run: 
+
+```shell
+make quick-gen
+cd outputs-all
+```
+
+There you will find each contract type generated. Best practice workflow is to:
+
+- `cd` into each generated contract
+- Look at the code and diagnose the error
+- Either
+  - Make the change to the template + Regenerate the code with `make quick-gen`
+  - Make change to the actual generated code then do the above
 
 ### TTD 
 
