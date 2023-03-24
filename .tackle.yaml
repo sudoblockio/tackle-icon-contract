@@ -23,7 +23,8 @@
     # For differentiating between tokens and contracts
     contract_class->: literal token --if is_token --else contract
     contract_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
-    project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
+#    project_slug->: var contract_name|replace(' ','_')|replace('-','_')|replace('.','_')|trim()
+    project_slug->: var contract_name|lower()|replace(' ','-')|trim()
     contract_slug->: var project_slug|replace('_','')
 
     prompts:
@@ -92,7 +93,6 @@
     ci_enable->: confirm Do you want to generate CI
     gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
-    #d->: debug
     gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
 
     make gradlew executable_>: chmod {{path_join([project_slug,'gradlew'])}} "0o775"
