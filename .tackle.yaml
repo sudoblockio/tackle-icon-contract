@@ -92,10 +92,9 @@
     # Generate the code
     ci_enable->: confirm Do you want to generate CI
     gen ci_>: generate templates/.github {{project_slug}}/.github --if ci_enable
-    # gen boilerplate_>: generate templates/boilerplate {{project_slug}}
-    # gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
-    gen boilerplate_>: generate templates/core-contracts {{project_slug}}
-    
+    gen boilerplate_>: generate templates/boilerplate {{project_slug}}
+    gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
+
     make gradlew executable_>: chmod {{path_join([project_slug,'gradlew'])}} "0o775"
 
     # TODO: Add drogon
