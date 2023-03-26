@@ -1,1 +1,1 @@
-rootProject.name = '{{project_slug}}'
+rootProject.name = '{{contract_standard}}'
