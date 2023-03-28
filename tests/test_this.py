@@ -7,13 +7,14 @@ BASE_OVERRIDES = {
     "license": "",
     "ci_enable": True,
     "warning": True,
+    "compile_enable": True,
 }
 
 CONTRACT_STANDARDS = [
-    # ("contract"),
-    # ("irc2"),
+    ("contract"),
+    ("irc2"),
     ("irc3"),
-    # ("irc31"),
+    ("irc31"),
 ]
 
 
@@ -25,7 +26,6 @@ def test_defaults(
         test_pytest_output,
         cleanup_output,
         contract_standard,
-        compile_contract,
 ):
     """
     Setting no_input (ie choose the default value, true for the `confirm` hook), this
@@ -105,7 +105,6 @@ def test_features(
         cleanup_output,
         token_standard,
         options,
-        # compile_contract,
 ):
     overrides = {
         "contract_standard": token_standard,
