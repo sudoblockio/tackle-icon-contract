@@ -95,12 +95,19 @@
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
     gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
 
-    make gradlew executable_>: chmod {{path_join([project_slug,'gradlew'])}} "0o775"
+    # This is here as we
+    project_path:
+      ->: path_join
+      paths:
+        - {{calling_directory}}
+        - {{project_slug}}
+
+    make gradlew executable_>: chmod {{path_join([project_path,'gradlew'])}} "0o775"
 
     compile_enable->: confirm Do you want to compile the {{contract_class}}?
     compile contract:
       _>: command "./gradlew build"
-      chdir: {{project_slug}}
+      chdir: {{project_path}}
       if: compile_enable
 
     # TODO: Add drogon tests
