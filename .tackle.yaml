@@ -95,7 +95,7 @@
     gen boilerplate_>: generate templates/boilerplate {{project_slug}}
     gen contract_>: generate templates/{{contract_standard}} {{project_slug}}
 
-    # This is here as we
+    # This is here as we need a full path to the output files
     project_path:
       ->: path_join
       paths:
