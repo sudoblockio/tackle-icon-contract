@@ -46,7 +46,7 @@
         # Can contracts be snapshotted -> perhaps some state that is specified?
         snapshots: Will there be snapshotting of this token?
         # ?
-        enumerable: Is this token enumerable?
+        enumerable: Enable enumerable properties - optional interfaces for totalSupply, tokenByIndex, and tokenOfOwnerByIndex?
         # ?
         uri_storage: |
           Will the storage be based on some kind URI? eg ?
@@ -114,6 +114,19 @@
 
 
 test<-:
-  help: Run the tests
+  help: Run tests quickly with the default Python
   exec:
-    info->: print Running tests
+    cmd:
+      ->: command
+      command: |
+        pip install -r requirements-dev.txt
+        pytest tests
+
+quick_gen<-:
+  help: Quickly generate all the contracts to `outputs-all` directory
+  exec:
+    cmd:
+      ->: command
+      command: |
+        pip install -r requirements-dev.txt
+        pytest . -k test_manual --manual

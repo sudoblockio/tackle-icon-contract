@@ -1,3 +1,2 @@
-tackle
 pytest
-tox
+pytest-mock
