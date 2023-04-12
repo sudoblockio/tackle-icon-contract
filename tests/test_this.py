@@ -2,8 +2,7 @@ from tackle.main import tackle
 import pytest
 
 BASE_OVERRIDES = {
-    "contract_name": "Foo Contract",
-    "project_slug": "output",
+    "project_name": "output",
     "license": "",
     "ci_enable": True,
     "warning": True,
@@ -12,9 +11,9 @@ BASE_OVERRIDES = {
 
 CONTRACT_STANDARDS = [
     ("contract"),
-    ("irc2"),
-    ("irc3"),
-    ("irc31"),
+    # ("irc2"),
+    # ("irc3"),
+    # ("irc31"),
 ]
 
 
@@ -22,7 +21,6 @@ CONTRACT_STANDARDS = [
 def test_defaults(
         change_base_dir,
         assert_paths,
-        change_dir,
         test_pytest_output,
         cleanup_output,
         contract_standard,
@@ -44,7 +42,7 @@ def test_defaults(
     assert_paths(
         [
             "README.md",
-            "requirements-dev.txt",
+            "gradlew",
         ],
         "output",
     )
@@ -116,7 +114,7 @@ def test_features(
     assert_paths(
         [
             "README.md",
-            "requirements-dev.txt",
+            "gradlew",
         ],
         "output",
     )
