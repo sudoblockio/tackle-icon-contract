@@ -3,17 +3,23 @@ import pytest
 
 BASE_OVERRIDES = {
     "project_name": "output",
+    "github_org_name": "sudoblockio",
     "license": "",
     "ci_enable": True,
     "warning": True,
     "compile_enable": True,
+    "contract_path": [
+        "com",
+        "sudoblockio",
+        "output",
+    ]
 }
 
 CONTRACT_STANDARDS = [
     ("contract"),
-    # ("irc2"),
-    # ("irc3"),
-    # ("irc31"),
+    ("irc2"),
+    ("irc3"),
+    ("irc31"),
 ]
 
 
