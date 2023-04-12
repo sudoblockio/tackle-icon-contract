@@ -41,6 +41,7 @@ def test_defaults(
     overrides.update(BASE_OVERRIDES)
 
     tackle(
+        "create_contract",
         no_input=True,
         override=overrides,
     )
@@ -115,7 +116,10 @@ def test_features(
     }
     overrides.update(BASE_OVERRIDES)
 
-    tackle(override=overrides)
+    tackle(
+        "create_contract",
+        override=overrides,
+    )
 
     assert_paths(
         [
@@ -174,6 +178,7 @@ def test_mocked_remote(
 
     o = tackle(
         "test/test",
+        "create_contract",
         no_input=True,
         override=overrides,
     )

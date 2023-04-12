@@ -1,3 +1,18 @@
+<-:
+  help: Generate scaffolding for an ICON smart contract
+  exec:
+    selection:
+      ->: select What do you want to do?
+      choices:
+        # TODO: Change to allow calling in one action (ie *->: or *: {->: ...})
+        - Create a contract / token: create_contract
+        - Create another code generator: create_tackle
+
+    action:
+      ->: match {{selection}}
+      case:
+        create_contract->: create_contract
+        create_tackle->: create_tackle
 
 names<_:
   help: Private method to maintain naming conventions
@@ -16,61 +31,19 @@ names<_:
       - {{calling_directory}}
       - {{project_slug}}
 
-
-create_tackle<-:
-  help: Create a tackle project which you can use to generate more projects.
-  exec:
-    # Call the names function for naming conventions
-    merge names->: names --merge
-
-    license->: tackle robcxyz/tackle-license --output {{project_dir_name}}
-    gen boilerplate_>: generate boilerplate-tackle {{project_dir_name}}
-
-    copy_templates:
-      - src: boilerplate
-        dst: boilerplate
-      - src: example-contract
-        dst: contract
-    copy templates_>: copy {{path_join(['templates',item.src])}} --for copy_templates {{path_join([project_path,'templates',item.dst])}}
-
-
-<-:
+create_contract<-:
   help: Generate scaffolding for an ICON smart contract
   exec:
-    # A warning -> to be removed
-#    warning:
-#      ->: confirm
-#      message: |
-#        WARNING: This is very much a WIP project. Features such as "burnable",
-#        "mintable", etc have not been implemented yet. It simply uses the contracts
-#        from the sample contracts repo. Later version will use contracts from
-#        https://github.com/TechFlow-Space/icon-smart-contract-deployer but these still
-#        need to be templated and have the actual features implemented. It is advised
-#        to wait till then before really using this tool.
-
     is_token->: confirm Is this a token / NFT?
     contract_standard:
       ->: select What standard do you want to build on? --if is_token --else contract
       choices:
-#        - Generic Contract: contract
         - IRC2 Fungible Token: irc2
         - IRC3 Non-Fungible Token: irc3
         - IRC31 Non-Fungible Token: irc31
 
     # For differentiating between tokens and contracts
     contract_class->: literal token --if is_token --else contract
-
-#    project_name->: input What is the {{contract_class}} name? --default "Big Deal {{contract_class.title()}}"
-#
-#    project_slug->: var project_name|lower()|replace(' ','-')|replace('_','-')|replace('.','-')|trim()
-#    project_name_camel->: var project_name|title()|replace(' ','')|replace('_','')|replace('-','')|trim()
-#    project_name_snake->: var project_name|lower()|replace(' ','_')|replace('-','_')|trim()
-#    # This is here as we need a full path to the output files
-#    project_path:
-#      ->: path_join
-#      paths:
-#        - {{calling_directory}}
-#        - {{project_slug}}
 
     # Call the names function for naming conventions
     merge names->: names --merge
@@ -85,7 +58,7 @@ create_tackle<-:
       - ->: input Bottom level directory for contract (ie {{path_join(contract_path)}})?
         if: contract_path|length>3 and confirm('Do you want a fourth level directory?')
 
-#    d->: debug
+    #    d->: debug
     prompts:
       _>: var
       input:
@@ -161,6 +134,142 @@ create_tackle<-:
       if: compile_enable
 
     # TODO: Add drogon tests
+
+
+
+create_tackle<-:
+  help: Create a tackle project which you can use to generate more projects.
+  exec:
+    # Call the names function for naming conventions
+    merge names->: names --merge
+
+    license->: tackle robcxyz/tackle-license --output {{project_dir_name}}
+    gen boilerplate_>: generate boilerplate-tackle {{project_dir_name}}
+
+    copy_templates:
+      - src: boilerplate
+        dst: boilerplate
+      - src: example-contract
+        dst: contract
+    copy templates_>: copy {{path_join(['templates',item.src])}} --for copy_templates {{path_join([project_path,'templates',item.dst])}}
+
+
+
+
+
+    # A warning -> to be removed
+#    warning:
+#      ->: confirm
+#      message: |
+#        WARNING: This is very much a WIP project. Features such as "burnable",
+#        "mintable", etc have not been implemented yet. It simply uses the contracts
+#        from the sample contracts repo. Later version will use contracts from
+#        https://github.com/TechFlow-Space/icon-smart-contract-deployer but these still
+#        need to be templated and have the actual features implemented. It is advised
+#        to wait till then before really using this tool.
+
+#    is_token->: confirm Is this a token / NFT?
+#    contract_standard:
+#      ->: select What standard do you want to build on? --if is_token --else contract
+#      choices:
+#        - IRC2 Fungible Token: irc2
+#        - IRC3 Non-Fungible Token: irc3
+#        - IRC31 Non-Fungible Token: irc31
+#
+#    # For differentiating between tokens and contracts
+#    contract_class->: literal token --if is_token --else contract
+#
+#    # Call the names function for naming conventions
+#    merge names->: names --merge
+#
+#    github_org_name->: input What is your org name?
+#    contract_path:
+#      - java
+#      - ->: input Top level directory for contract (ie {{path_join(contract_path)}}) - typically com / network / io?
+#      - ->: input Mid level directory for contract (ie {{path_join(contract_path)}}) - typically your github org name?
+#      - ->: input Bottom level directory for contract (ie {{path_join(contract_path)}}) - typically your repo name?
+#        if: confirm('Do you want a third level directory?')
+#      - ->: input Bottom level directory for contract (ie {{path_join(contract_path)}})?
+#        if: contract_path|length>3 and confirm('Do you want a fourth level directory?')
+#
+##    d->: debug
+#    prompts:
+#      _>: var
+#      input:
+#        # Follow up with permissions - ie multi-sig for minting or some contract functionality.
+#        mintable: Is this token mintable?
+#        auto_increment_ids: Do you want the token IDs to auto-increment?
+#        # Followup?
+#        burnable: Is this token burnable?
+#        # Should pausable have additional prompts such as who is able to pause it or just assume owner?
+#        # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
+#        pausable: Is this {{contract_class}} pausable?
+#        # ?
+#        permit: Is this token permissioned?
+#        # Can contracts have voting?
+#        votes: Will there be voting enabled for this token?
+#        flash_minting: Will there be flash minting enabled for this token?
+#        # Can contracts be snapshotted -> perhaps some state that is specified?
+#        snapshots: Will there be snapshotting of this token?
+#        # ?
+#        enumerable: Enable enumerable properties - optional interfaces for totalSupply, tokenByIndex, and tokenOfOwnerByIndex?
+#        # ?
+#        uri_storage: |
+#          Will the storage be based on some kind URI? eg ?
+#
+#    features:
+#      ->: match contract_standard
+#      case:
+#        irc2:
+#          mintable->: confirm {{prompts.mintable}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          permit->: confirm {{prompts.permit}}
+#          votes->: confirm {{prompts.votes}}
+#          flash_minting->: confirm {{prompts.flash_minting}}
+#          snapshots->: confirm {{prompts.snapshots}}
+#        irc3:
+#          mintable->: confirm {{prompts.mintable}}
+#          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          votes->: confirm {{prompts.votes}}
+#          enumerable->: confirm {{prompts.enumerable}}
+#          uri_storage->: confirm {{prompts.uri_storage}}
+#        irc31:
+#          mintable->: confirm {{prompts.mintable}}
+#          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          votes->: confirm {{prompts.votes}}
+#          enumerable->: confirm {{prompts.enumerable}}
+#          uri_storage->: confirm {{prompts.uri_storage}}
+#        contract:
+#          pausable->: confirm {{prompts.pausable}}
+#
+#    # In order to properly test the file, we need to merge these values separately. This
+#    # is because the whole `features` key is overriden. Current tackle does not support
+#    # overriding keys within
+#    merge features->: var {{features}} --merge
+#
+#    # Create a license file
+#    license->: tackle robcxyz/tackle-license --output {{project_path}}
+#
+#    # Generate the code
+#    gen boilerplate_>: generate templates/boilerplate {{project_path}}
+#    gen contract_>: generate templates/{{contract_standard}} {{project_path}}
+#
+#    make gradlew executable_>: chmod {{path_join([project_path,'gradlew'])}} "0o775"
+#
+#    compile_enable->: confirm Do you want to compile the {{contract_class}}?
+#    compile contract:
+#      _>: command "./gradlew build"
+#      chdir: {{project_path}}
+#      if: compile_enable
+#
+#    # TODO: Add drogon tests
+
+
 
 
 test<-:
