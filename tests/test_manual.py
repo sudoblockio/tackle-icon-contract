@@ -3,10 +3,11 @@ import pytest
 from tackle import tackle
 
 # For now use this then later make custom version
-from tests.test_this import CONTRACT_FEATURES, BASE_OVERRIDES
+from tests.test_create_contract import CONTRACT_FEATURES, BASE_OVERRIDES
 
 
-# This is only supposed to be run from Makefile -> `make quick-gen`
+# This is only supposed to be run from tackle -> `tackle quick_gen`
+#  ie pytest . -k test_manual --manual
 # It outputs to `outputs-all/{contract type}`
 # Used for quickly generating the outputs of all the token standards so that we can
 # debug them.
@@ -26,4 +27,4 @@ def test_manual(
     overrides.update(BASE_OVERRIDES)
     overrides['project_slug'] = os.path.join("outputs-all", token_standard)
 
-    tackle(override=overrides)
+    tackle("create_contract", override=overrides)
