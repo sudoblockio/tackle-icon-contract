@@ -70,6 +70,7 @@ create_contract<-:
       input:
         # Follow up with permissions - ie multi-sig for minting or some contract functionality.
         mintable: Is this token mintable?
+        stable: Is this token stable (ie tied to an oracle - Band by default)?
         auto_increment_ids: Do you want the token IDs to auto-increment?
         # Followup?
         burnable: Is this token burnable?
@@ -94,30 +95,31 @@ create_contract<-:
       case:
         irc2:
           mintable->: confirm {{prompts.mintable}}
-          burnable->: confirm {{prompts.burnable}}
-          pausable->: confirm {{prompts.pausable}}
-          permit->: confirm {{prompts.permit}}
-          votes->: confirm {{prompts.votes}}
-          flash_minting->: confirm {{prompts.flash_minting}}
-          snapshots->: confirm {{prompts.snapshots}}
-        irc3:
-          mintable->: confirm {{prompts.mintable}}
-          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
-          burnable->: confirm {{prompts.burnable}}
-          pausable->: confirm {{prompts.pausable}}
-          votes->: confirm {{prompts.votes}}
-          enumerable->: confirm {{prompts.enumerable}}
-          uri_storage->: confirm {{prompts.uri_storage}}
-        irc31:
-          mintable->: confirm {{prompts.mintable}}
-          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
-          burnable->: confirm {{prompts.burnable}}
-          pausable->: confirm {{prompts.pausable}}
-          votes->: confirm {{prompts.votes}}
-          enumerable->: confirm {{prompts.enumerable}}
-          uri_storage->: confirm {{prompts.uri_storage}}
-        contract:
-          pausable->: confirm {{prompts.pausable}}
+          stable->: confirm {{prompts.stable}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          permit->: confirm {{prompts.permit}}
+#          votes->: confirm {{prompts.votes}}
+#          flash_minting->: confirm {{prompts.flash_minting}}
+#          snapshots->: confirm {{prompts.snapshots}}
+        irc3: {}
+#          mintable->: confirm {{prompts.mintable}}
+#          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          votes->: confirm {{prompts.votes}}
+#          enumerable->: confirm {{prompts.enumerable}}
+#          uri_storage->: confirm {{prompts.uri_storage}}
+        irc31: {}
+#          mintable->: confirm {{prompts.mintable}}
+#          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
+#          burnable->: confirm {{prompts.burnable}}
+#          pausable->: confirm {{prompts.pausable}}
+#          votes->: confirm {{prompts.votes}}
+#          enumerable->: confirm {{prompts.enumerable}}
+#          uri_storage->: confirm {{prompts.uri_storage}}
+        contract: {}
+#          pausable->: confirm {{prompts.pausable}}
 
     # In order to properly test the file, we need to merge these values separately. This
     # is because the whole `features` key is overriden. Current tackle does not support
