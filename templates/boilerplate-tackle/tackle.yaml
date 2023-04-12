@@ -1,0 +1,28 @@
+#{% raw %}
+project_name->: input What is the name of the project?
+
+project_dir_name->: var project_name|lower()|replace(' ','-')|replace('_','-')|trim()
+project_name_camel->: var project_name|title()|replace(' ','')|replace('_','')|replace('-','')|trim()
+project_name_snake->: var project_name|lower()|replace(' ','_')|replace('-','_')|trim()
+project_path:
+  ->: path_join
+  paths:
+    - {{calling_directory}}
+    - {{project_dir_name}}
+
+# Your features here
+#mintable->: confirm Is this token mintable?
+# Then put jinja templating into your contract.
+
+
+# Generate the code
+generate code_>: generate contract {{project_dir_name}}
+generate boilerplate_>: generate boilerplate {{project_dir_name}}
+
+make gradlew executable_>: chmod {{path_join([project_path,'gradlew'])}} "0o775"
+compile_enable->: confirm Do you want to compile the contract?
+compile contract:
+  _>: command "./gradlew build"
+  chdir: {{project_path}}
+  if: compile_enable
+#{% endraw %}

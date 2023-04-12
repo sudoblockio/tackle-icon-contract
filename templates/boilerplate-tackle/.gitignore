@@ -1,0 +1,54 @@
+###
+output
+
+### Java
+.gradle
+**/build/
+!src/**/build/
+*.jar
+!gradle-wrapper.jar
+JavaTemp
+gradle.properties
+**/env.props
+scores/**
+**/**.json
+
+
+### IDEs
+.idea
+.vscode
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+
+### Vim template
+# Swap
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+
+# Temporary
+.netrwhist
+# Auto-generated tag files
+tags
+
+### SublimeText template
+# Cache files for Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# Workspace files are user-specific
+*.sublime-workspace
+
+# Project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using Sublime Text
+# *.sublime-project
+
+# SFTP configuration file
+sftp-config.json

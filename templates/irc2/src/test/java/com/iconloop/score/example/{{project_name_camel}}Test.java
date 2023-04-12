@@ -28,7 +28,7 @@ import java.math.BigInteger;
 import static java.math.BigInteger.TEN;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class {{contract_slug}}Test extends TestBase {
+class {{project_name_camel}}Test extends TestBase {
     private static final String name = "MyIRC2Token";
     private static final String symbol = "MIT";
     private static final int decimals = 18;
@@ -41,7 +41,7 @@ class {{contract_slug}}Test extends TestBase {
 
     @BeforeAll
     public static void setup() throws Exception {
-        tokenScore = sm.deploy(owner, {{contract_slug}}.class,
+        tokenScore = sm.deploy(owner, {{project_name_camel}}.class,
                 name, symbol, decimals, initialSupply);
         owner.addBalance(symbol, totalSupply);
     }

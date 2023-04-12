@@ -1,0 +1,19 @@
+name: push-main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install tackle
+        run: pip3 install tackle
+
+      - name: Run tests
+        run: tackle test

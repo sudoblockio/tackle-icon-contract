@@ -25,20 +25,20 @@ class AppTest {
     @Test
     void appHasAName() {
         final String name = "Alice";
-        {{contract_slug}} classUnderTest = new {{contract_slug}}(name);
+        {{project_name_camel}} classUnderTest = new {{project_name_camel}}(name);
         assertEquals(classUnderTest.name(), name);
     }
 
     @Test
     void appHasAGreeting() {
-        {{contract_slug}} classUnderTest = new {{contract_slug}}("Alice");
+        {{project_name_camel}} classUnderTest = new {{project_name_camel}}("Alice");
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 
     @Test
     void setName() {
         final String alice = "Alice";
-        {{contract_slug}} classUnderTest = new {{contract_slug}}(alice);
+        {{project_name_camel}} classUnderTest = new {{project_name_camel}}(alice);
         assertEquals(classUnderTest.name(), alice);
 
         final String bob = "Bob";

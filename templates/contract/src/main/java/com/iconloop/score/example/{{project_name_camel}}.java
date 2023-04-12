@@ -20,10 +20,10 @@ import score.Context;
 import score.annotation.External;
 import score.annotation.Payable;
 
-public class {{contract_slug}} {
+public class {{project_name_camel}} {
     private String name;
 
-    public {{contract_slug}}(String name) {
+    public {{project_name_camel}}(String name) {
         this.name = name;
     }
 

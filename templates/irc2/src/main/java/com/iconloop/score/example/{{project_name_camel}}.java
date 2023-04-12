@@ -34,29 +34,34 @@ public class IRC2BasicToken extends IRC2Basic {
     public Mint() {
         // Mint logic
     }{% endif %}
+
     {% if burnable %}
     public Burn() {
         // Burn logic
     }{% endif %}
+
     {% if pausable %}
     public Pause() {
         // Pause logic
     }{% endif %}
+
     {% if permit %}
     public Permit() {
         // Permit logic
     }{% endif %}
+
     {% if votes %}
     public Vote() {
         // Vote logic
     }{% endif %}
+
     {% if flash_minting %}
     public FlashMint() {
         // FlashMint logic
     }{% endif %}
+
     {% if snapshots %}
     public Snapshot() {
         // Snapshot logic
     }{% endif %}
-
 }
