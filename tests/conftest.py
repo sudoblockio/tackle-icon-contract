@@ -1,9 +1,10 @@
 import os
 import shutil
 import sys
+import subprocess
 import pytest
 from pytest import ExitCode
-import subprocess
+from tackle.settings import settings
 
 
 @pytest.fixture()
@@ -124,3 +125,16 @@ def pytest_collection_modifyitems(config, items):
     for item in items:
         if "manual" in item.keywords:
             item.add_marker(skip_manual)
+
+@pytest.fixture()
+def mock_remote(base_dir):
+    """Copy the provider to the provider dir simulating a remote call then cleanup."""
+    test_org_path = os.path.join(settings.provider_dir, "test")
+    test_provider_path = os.path.join(test_org_path, "test")
+
+    shutil.rmtree(path=test_org_path, ignore_errors=True)
+    os.makedirs(test_provider_path)
+    shutil.copytree(src=base_dir, dst=test_provider_path, dirs_exist_ok=True)
+
+    yield test_provider_path
+    shutil.rmtree(path=test_org_path)

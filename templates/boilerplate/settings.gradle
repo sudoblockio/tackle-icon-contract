@@ -1,1 +1,2 @@
-rootProject.name = '{{contract_standard}}'
+
+rootProject.name = '{{project_dir_name}}'

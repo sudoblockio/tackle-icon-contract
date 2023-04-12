@@ -68,7 +68,8 @@ public class IRC2BasicToken extends IRC2Basic {
         checkStatus();
         onlyEither(minter, minter2);
         mintWithTokenFallback(_account, _amount, _data);
-    }{% endif %}
+    }
+    {% endif %}
 
     {% if stable %}
     @External

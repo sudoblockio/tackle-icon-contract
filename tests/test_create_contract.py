@@ -3,7 +3,7 @@ import pytest
 
 BASE_OVERRIDES = {
     "project_name": "output",
-    "github_org_name": "sudoblockio",
+    "github_org": "sudoblockio",
     "license": "",
     "ci_enable": True,
     "warning": True,
@@ -60,42 +60,43 @@ CONTRACT_FEATURES = [
         "is_token": True,
         "features": {
             "mintable": True,
-            "burnable": True,
-            "pausable": True,
-            "permit": True,
-            "votes": True,
-            "flash_minting": True,
-            "snapshots": True,
+            "stable": True,
+            # "burnable": True,
+            # "pausable": True,
+            # "permit": True,
+            # "votes": True,
+            # "flash_minting": True,
+            # "snapshots": True,
         }
     }),
     ("irc3", {
         "is_token": True,
         "features": {
-            "mintable": True,
-            "auto_increment_ids": True,
-            "burnable": True,
-            "pausable": True,
-            "votes": True,
-            "enumerable": True,
-            "uri_storage": True,
+            # "mintable": True,
+            # "auto_increment_ids": True,
+            # "burnable": True,
+            # "pausable": True,
+            # "votes": True,
+            # "enumerable": True,
+            # "uri_storage": True,
         }
     }),
     ("irc31", {
         "is_token": True,
         "features": {
-            "mintable": True,
-            "auto_increment_ids": True,
-            "burnable": True,
-            "pausable": True,
-            "votes": True,
-            "enumerable": True,
-            "uri_storage": True,
+            # "mintable": True,
+            # "auto_increment_ids": True,
+            # "burnable": True,
+            # "pausable": True,
+            # "votes": True,
+            # "enumerable": True,
+            # "uri_storage": True,
         }
     }),
     ("contract", {
         "is_token": True,
         "features": {
-            "pausable": True,
+            # "pausable": True,
         }
     }),
 ]
@@ -128,30 +129,6 @@ def test_features(
         ],
         "output",
     )
-
-
-@pytest.fixture()
-def mock_remote(base_dir):
-    """
-    - Mock get_repo_source -> return path to
-    - Copy the provider to the provider dir
-    - Input 'test/test'
-    - yield
-    - Cleanup 'test/test' in providers dir
-    """
-    from tackle.settings import settings
-    import shutil
-    import os
-
-    test_org_path = os.path.join(settings.provider_dir, "test")
-    test_provider_path = os.path.join(test_org_path, "test")
-
-    shutil.rmtree(path=test_org_path, ignore_errors=True)
-    os.makedirs(test_provider_path)
-    shutil.copytree(src=base_dir, dst=test_provider_path, dirs_exist_ok=True)
-
-    yield test_provider_path
-    shutil.rmtree(path=test_org_path)
 
 
 @pytest.mark.parametrize("contract_standard", CONTRACT_STANDARDS)

@@ -1,5 +1,5 @@
 <-:
-  help: Generate scaffolding for an ICON smart contract
+  help: Generate scaffolding or generator for an ICON smart contract
   exec:
     selection:
       ->: select What do you want to do?
@@ -19,12 +19,14 @@
 names<_:
   help: Private method to maintain naming conventions
 
-  project_name->: input What is the name of this project? --default "Big Deal {{contract_class.title()}}"
+  github_org->: input What is your github org? --default sudoblockio
+  project_name->: input What is the name of this project? --default "Big Deal Contract"
 
   project_slug->: var project_name|lower()|replace(' ','-')|replace('_','-')|replace('.','-')|trim()
   project_name_camel->: var project_name|title()|replace(' ','')|replace('_','')|replace('-','')|trim()
   project_name_snake->: var project_name|lower()|replace(' ','_')|replace('-','_')|trim()
   project_dir_name->: var project_name|lower()|replace(' ','-')|replace('_','-')|trim()
+  project_name_compact->: var project_dir_name|replace('-','')
 
   # This is here as we need a full path to the output files
   project_path:
@@ -50,17 +52,18 @@ create_contract<-:
     # Call the names function for naming conventions
     merge names->: names --merge
 
-    github_org_name->: input What is your org name?
+    github_org->: input What is your org name? --default sudoblockio
     contract_path:
       - java
       - ->: input Top level directory for contract (ie {{path_join(contract_path)}}) - typically com / network / io?
+        default: com
       - ->: input Mid level directory for contract (ie {{path_join(contract_path)}}) - typically your github org name?
+        default: {{github_org}}
       - ->: input Bottom level directory for contract (ie {{path_join(contract_path)}}) - typically your repo name?
-        if: confirm('Do you want a third level directory?')
+        default: {{project_name_compact}}
       - ->: input Bottom level directory for contract (ie {{path_join(contract_path)}})?
-        if: contract_path|length>3 and confirm('Do you want a fourth level directory?')
-
-#    d->: debug
+        if: confirm('Do you want a fourth level directory?',default=False)
+        default: lib
 
     # These prompts are what need to be implemented to get to parity with OpenZeppelin.
     #  Each one represents an individual task to be implemented on an underlying
@@ -131,7 +134,11 @@ create_contract<-:
 
     # Generate the code
     gen boilerplate_>: generate templates/boilerplate {{project_path}}
-    gen contract_>: generate templates/{{contract_standard}} {{project_path}}
+    gen contract main:
+      _>: generate templates/{{contract_standard}}/{{item}} '{{path_join([project_path,"src",item]+contract_path)}}'
+      for:
+        - main
+        - test
 
     make gradlew executable_>: chmod {{path_join([project_path,'gradlew'])}} "0o775"
 
