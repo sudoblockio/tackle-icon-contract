@@ -9,6 +9,7 @@ project_path:
   paths:
     - {{calling_directory}}
     - {{project_dir_name}}
+github_org->: input What is your github org? --default sudoblockio
 
 # Your features here
 #mintable->: confirm Is this token mintable?
