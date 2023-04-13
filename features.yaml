@@ -15,7 +15,7 @@ mintable:
   templates:
     irc2:
       status: WIP
-      issue: https://
+      issue: https://github.com/sudoblockio/tackle-icon-contract/issues/7
     irc3:
       status: Todo
     irc31:
@@ -27,7 +27,7 @@ stable:
   templates:
     irc2:
       status: WIP
-      issue: https://
+      issue: https://github.com/sudoblockio/tackle-icon-contract/issues/8
 
 auto_increment_ids:
   name: Auto Increment NFT IDs
