@@ -65,68 +65,70 @@ create_contract<-:
         if: confirm('Do you want a fourth level directory?',default=False)
         default: lib
 
-    # These prompts are what need to be implemented to get to parity with OpenZeppelin.
-    #  Each one represents an individual task to be implemented on an underlying
-    #  template.
-    prompts:
-      _>: var
-      input:
-        # Follow up with permissions - ie multi-sig for minting or some contract functionality.
-        mintable: Is this token mintable?
-        stable: Is this token stable (ie tied to an oracle - Band by default)?
-        auto_increment_ids: Do you want the token IDs to auto-increment?
-        # Followup?
-        burnable: Is this token burnable?
-        # Should pausable have additional prompts such as who is able to pause it or just assume owner?
-        # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
-        pausable: Is this {{contract_class}} pausable?
-        # ?
-        permit: Is this token permissioned?
-        # Can contracts have voting?
-        votes: Will there be voting enabled for this token?
-        flash_minting: Will there be flash minting enabled for this token?
-        # Can contracts be snapshotted -> perhaps some state that is specified?
-        snapshots: Will there be snapshotting of this token?
-        # ?
-        enumerable: Enable enumerable properties - optional interfaces for totalSupply, tokenByIndex, and tokenOfOwnerByIndex?
-        # ?
-        uri_storage: |
-          Will the storage be based on some kind URI? eg ?
+    #    prompts:
+    #      _>: var
+    #      input:
+    #        # Follow up with permissions - ie multi-sig for minting or some contract functionality.
+    #        mintable: Is this token mintable?
+    #        stable: Is this token stable (ie tied to an oracle - Band by default)?
+    #        auto_increment_ids: Do you want the token IDs to auto-increment?
+    #        # Followup?
+    #        burnable: Is this token burnable?
+    #        # Should pausable have additional prompts such as who is able to pause it or just assume owner?
+    #        # Perhaps a followup prompt should ask if pausing permissions should be a multi-sig and implement that.
+    #        pausable: Is this {{contract_class}} pausable?
+    #        # ?
+    #        permit: Is this token permissioned?
+    #        # Can contracts have voting?
+    #        votes: Will there be voting enabled for this token?
+    #        flash_minting: Will there be flash minting enabled for this token?
+    #        # Can contracts be snapshotted -> perhaps some state that is specified?
+    #        snapshots: Will there be snapshotting of this token?
+    #        # ?
+    #        enumerable: Enable enumerable properties - optional interfaces for totalSupply, tokenByIndex, and tokenOfOwnerByIndex?
+    #        # ?
+    #        uri_storage: |
+    #          Will the storage be based on some kind URI? eg ?
+    #
+    #    features:
+    #      ->: match contract_standard
+    #      case:
+    #        irc2:
+    #          mintable->: confirm {{prompts.mintable}}
+    #          stable->: confirm {{prompts.stable}}
+    ##          burnable->: confirm {{prompts.burnable}}
+    ##          pausable->: confirm {{prompts.pausable}}
+    ##          permit->: confirm {{prompts.permit}}
+    ##          votes->: confirm {{prompts.votes}}
+    ##          flash_minting->: confirm {{prompts.flash_minting}}
+    ##          snapshots->: confirm {{prompts.snapshots}}
+    #        irc3: {}
+    ##          mintable->: confirm {{prompts.mintable}}
+    ##          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
+    ##          burnable->: confirm {{prompts.burnable}}
+    ##          pausable->: confirm {{prompts.pausable}}
+    ##          votes->: confirm {{prompts.votes}}
+    ##          enumerable->: confirm {{prompts.enumerable}}
+    ##          uri_storage->: confirm {{prompts.uri_storage}}
+    #        irc31: {}
+    ##          mintable->: confirm {{prompts.mintable}}
+    ##          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
+    ##          burnable->: confirm {{prompts.burnable}}
+    ##          pausable->: confirm {{prompts.pausable}}
+    ##          votes->: confirm {{prompts.votes}}
+    ##          enumerable->: confirm {{prompts.enumerable}}
+    ##          uri_storage->: confirm {{prompts.uri_storage}}
+    #        contract: {}
+    ##          pausable->: confirm {{prompts.pausable}}
+    #
+    #    # In order to properly test the file, we need to merge these values separately. This
+    #    # is because the whole `features` key is overriden. Current tackle does not support
+    #    # overriding keys within
+    #    merge features->: var {{features}} --merge
 
     features:
-      ->: match contract_standard
-      case:
-        irc2:
-          mintable->: confirm {{prompts.mintable}}
-          stable->: confirm {{prompts.stable}}
-#          burnable->: confirm {{prompts.burnable}}
-#          pausable->: confirm {{prompts.pausable}}
-#          permit->: confirm {{prompts.permit}}
-#          votes->: confirm {{prompts.votes}}
-#          flash_minting->: confirm {{prompts.flash_minting}}
-#          snapshots->: confirm {{prompts.snapshots}}
-        irc3: {}
-#          mintable->: confirm {{prompts.mintable}}
-#          auto_increment_ids->: confirm --if mintable --else false {{prompts.auto_increment_ids}}
-#          burnable->: confirm {{prompts.burnable}}
-#          pausable->: confirm {{prompts.pausable}}
-#          votes->: confirm {{prompts.votes}}
-#          enumerable->: confirm {{prompts.enumerable}}
-#          uri_storage->: confirm {{prompts.uri_storage}}
-        irc31: {}
-#          mintable->: confirm {{prompts.mintable}}
-#          auto_increment_ids->: confirm --if mintable --else false  {{prompts.auto_increment_ids}}
-#          burnable->: confirm {{prompts.burnable}}
-#          pausable->: confirm {{prompts.pausable}}
-#          votes->: confirm {{prompts.votes}}
-#          enumerable->: confirm {{prompts.enumerable}}
-#          uri_storage->: confirm {{prompts.uri_storage}}
-        contract: {}
-#          pausable->: confirm {{prompts.pausable}}
-
-    # In order to properly test the file, we need to merge these values separately. This
-    # is because the whole `features` key is overriden. Current tackle does not support
-    # overriding keys within
+      ->: features.contract_creation --template {{contract_standard}}
+#    d->: debug
     merge features->: var {{features}} --merge
 
     # Create a license file
@@ -185,3 +187,133 @@ quick_gen<-:
       command: |
         pip install -r requirements-dev.txt
         pytest . -k test_manual --manual
+
+prompt_feature<-:
+  help: Helper to prompt for a feature and return a k/v pair of the feature. Meant to be used with merge.
+  name: str
+  question: str
+  templates: dict
+  # Additional data
+  template: str
+  feature_var: str
+
+  return: output
+  exec:
+    output: {}
+    status:
+      ->: var " status={{templates[template].status}}"
+      if: "'status' in templates[template]"
+      else: ""
+    enabled->: confirm {{question}}{{status}}
+    update output->: update output {"{{feature_var}}":"{{enabled}}"}
+
+
+features<-:
+  help: For keeping features dry and updating a table with feature status
+  template_types:
+    - IRC2
+    - IRC3
+    - IRC31
+    - Contract
+
+  template_types_lower:
+    default:
+      ->: "{{item.lower()}}"
+      for: template_types
+
+  # List of statuses for each feature
+  status_types:
+    - "Todo"
+    - "WIP"
+    - "Alpha"
+    - "Beta"
+    - "v0"
+
+  # List of statuses to exclude from prompting
+  status_disabled:
+    - "Todo"
+#    - "WIP"  # Should be disabled once more contracts are added
+
+  # Get the data from the features.yaml
+  data->: tackle features.yaml
+  all_features->: "{{keys(data)}}"
+
+  contract_creation<-:
+    template: str
+    exec:
+      check if template allowed_>: assert "{{template in template_types_lower}}"
+      feature_list:
+        ->: var {{item}} --for all_features
+        if: template in keys(data[item]['templates']) and data[item]['templates'][template].status not in status_disabled
+
+      feature_map: {}
+      set feature_map:
+        _>: update feature_map {'{{item}}':'{{data[item]}}'}
+        for: feature_list
+
+      output: {}
+      set output:
+        ->: update output "{{prompt_feature(template=contract_standard,feature_var=item,**feature_map[item])}}"
+        for: feature_list
+      # In order to properly test the file, we need to merge these values separately. This
+      # is because the whole `features` key is overriden. Current tackle does not support
+      # overriding keys within
+    return: output
+
+  create_table<-:
+    help: Update the feature table in the readme
+    return: output
+    exec:
+      columns->: "{{['Features'] + template_types}}"
+      output: [ ]
+      contents->:
+        for: all_features
+        feature_name->: "{{item}}"
+        col_data:
+          ->: "{{feature_type.string(**data[feature_name].templates[item])}}"
+          for: template_types_lower
+          if: item in keys(data[feature_name].templates)
+          else: "-"
+        append to output_>: append output {{col_data}}
+
+      rendered:
+        ->: var
+        input: |
+          | Features | {% for i in template_types %} {{i}} |{% endfor %}
+          | --- |{% for i in template_types %} --- | {% endfor %}
+          {% for feat in all_features %}{% set outer_loop = loop %}| {{feat}} |{% for i in output[outer_loop.index-1] %} {{i}} | {% endfor %}
+          {% endfor %}
+
+      update_section_>: update_section README.md {{rendered}}
+
+feature_type<_:
+  status: Todo
+  issue: ""
+  string<-:
+    exec:
+      output:
+        ->: "{{status}}"
+        if: issue==""
+        else: "[{{status}}]({{issue}})"
+    return: output
+
+get_row_data<_:
+  rows->: list
+  columns->: list
+  exec:
+    output: [ ]
+    contents->:
+      for: rows
+      feature_name->: "{{item}}"
+
+      do:
+        ->: "{{data[feature_name].templates[item].status}}"
+        for: contract_types
+        if: item in data[feature_name].templates
+        else:
+          if issue->:
+          if:
+          else:
+            "-"
+      merge: append output {{item}} --for do
+

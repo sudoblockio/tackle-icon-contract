@@ -4,6 +4,7 @@ import sys
 import subprocess
 import pytest
 from pytest import ExitCode
+from ruamel.yaml import YAML
 from tackle.settings import settings
 
 
@@ -138,3 +139,20 @@ def mock_remote(base_dir):
 
     yield test_provider_path
     shutil.rmtree(path=test_org_path)
+
+
+@pytest.fixture()
+def get_features():
+
+    def f(contract_standard: str) -> dict:
+        yaml = YAML()
+        with open('features.yaml') as f:
+            features = yaml.load(f)
+
+        return {
+            k: True for k, v in features.items()
+            if contract_standard in v['templates']
+               and v['templates'][contract_standard]['status'] != 'Todo'
+        }
+
+    return f

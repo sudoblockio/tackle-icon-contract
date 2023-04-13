@@ -110,11 +110,14 @@ def test_features(
         cleanup_output,
         token_standard,
         options,
+        get_features,
 ):
     overrides = {
         "contract_standard": token_standard,
-        **options,
+        "is_token": True,
+        'features': get_features(token_standard),
     }
+
     overrides.update(BASE_OVERRIDES)
 
     tackle(

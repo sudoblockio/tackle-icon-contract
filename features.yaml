@@ -1,0 +1,121 @@
+# These prompts are what need to be implemented to get to parity with OpenZeppelin.
+#  Each one represents an individual task to be implemented on an underlying template.
+
+# They all abide by the same schema.
+# name: Not used
+# question: For prompt when enabling feature
+# templates: A dict
+#   <contract_standard> - The dir that is rendered
+#      status: One of `status_types` in the tackle.yaml
+#      issue: Makes the table linkable to an issue for the feature
+
+mintable:
+  name: Mintable
+  question: Is this token mintable?
+  templates:
+    irc2:
+      status: WIP
+      issue: https://
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+stable:
+  name: Mintable
+  question: Is this token stable (ie pegged to an oracle)?
+  templates:
+    irc2:
+      status: WIP
+      issue: https://
+
+auto_increment_ids:
+  name: Auto Increment NFT IDs
+  question: Do you want the token IDs to auto-increment?
+  templates:
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+burnable:
+  name: Burnable
+  question: Is this token burnable?
+  templates:
+    irc2:
+      status: Todo
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+pausable:
+  name: Pausable
+  question: Is this contract pausable?
+  templates:
+    contract:
+      status: Todo
+    irc2:
+      status: Todo
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+permit:
+  name: Permissioned
+  question: Is this token permissioned?
+  templates:
+    contract:
+      status: Todo
+    irc2:
+      status: Todo
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+votes:
+  name: Governance
+  question: Will there be voting enabled for this token?
+  templates:
+    contract:
+      status: Todo
+    irc2:
+      status: Todo
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+flash_minting:
+  name: Flash Minting
+  question: Will there be flash minting enabled for this token?
+  templates:
+    irc2:
+      status: Todo
+
+snapshots:
+  name: Snapshots
+  question: Will there be snapshotting of this token?
+  templates:
+    irc2:
+      status: Todo
+
+enumerable:
+  name: Enumberable
+  question: Enable enumerable properties - optional interfaces for totalSupply, tokenByIndex, and tokenOfOwnerByIndex?
+  templates:
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
+
+uri_storage:
+  name: URI Storage
+  question: Does this NFT have storage URI?
+  templates:
+    irc3:
+      status: Todo
+    irc31:
+      status: Todo
