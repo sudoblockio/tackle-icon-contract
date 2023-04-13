@@ -125,8 +125,7 @@ public class IRC2BasicToken extends IRC2Basic {
 
     @EventLog(indexed = 3)
     public void OraclePrice(String market, String oracle_name, Address oracle_address, BigInteger price) {
-    }
-    {% endif %}
+    }{% endif %}
 
     @Override
     @External

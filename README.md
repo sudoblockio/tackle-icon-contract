@@ -154,7 +154,7 @@ pytest tests
 A feature is something that can be conditionally added to a contract such as whether a token can be `mintable` or `pausable` (see [similar tools](#similar-tools) to see comparable features). To add these features to the code generator per the table above, you need to follow a couple of steps. 
 
 Create an issue in this repo that you would like to implement this feature
-Make the changes to the underlying contract template with jinja templating to enable the feature. For a good example, see the [irc2 template](./templates/irc2/main/) where you can see jinja templating enabling features, ie (`mintable` and `stable`).
+Make the changes to the underlying contract template with jinja templating to enable the feature. For a good example, see the [irc2 template](https://github.com/sudoblockio/tackle-icon-contract/blob/main/templates/irc2/main/%7B%7Bproject_name_camel%7D%7D.java#L36) where you can see jinja templating enabling features, ie (`mintable` and `stable`).
 
 In general templating looks like:
 
